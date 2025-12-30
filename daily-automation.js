@@ -1,45 +1,32 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 
-const topics = [
-  'JavaScript Hoisting and Temporal Dead Zone',
-  'Event Loop and Call Stack',
-  'Prototype Chain and Inheritance',
-  'Memory Management and Garbage Collection',
-  'Regular Expressions in JavaScript',
-  'JSON Methods and Data Parsing',
-  'Local Storage and Session Storage',
-  'Fetch API and HTTP Requests',
-  'JavaScript Debugging Techniques',
-  'Performance Optimization Tips'
+const jsTopics = [
+  '// 1. Hoisting: var declarations are moved to top of scope',
+  '// 2. Event Loop: Handles async operations in JavaScript',
+  '// 3. Closures: Inner functions access outer function variables',
+  '// 4. Prototypes: Objects inherit properties from prototype chain',
+  '// 5. Promises: Handle asynchronous operations with .then()',
+  '// 6. Arrow Functions: Shorter syntax, lexical this binding',
+  '// 7. Destructuring: Extract values from arrays/objects easily',
+  '// 8. Template Literals: Use backticks for string interpolation',
+  '// 9. Spread Operator: ...array expands elements',
+  '// 10. Async/Await: Cleaner syntax for promise-based code'
 ];
 
-const comments = [
-  '// Hoisting moves declarations to top of scope\n// let/const have temporal dead zone, var doesn\'t',
-  '// Event loop handles async operations\n// Call stack executes synchronous code',
-  '// Every object has __proto__ property\n// Constructor functions create prototype chain',
-  '// JavaScript uses mark-and-sweep garbage collection\n// Avoid memory leaks with proper cleanup',
-  '// RegExp objects test and match string patterns\n// Use flags like g, i, m for different behaviors',
-  '// JSON.parse() converts string to object\n// JSON.stringify() converts object to string',
-  '// localStorage persists data across sessions\n// sessionStorage clears when tab closes',
-  '// fetch() returns a Promise for HTTP requests\n// Use .then() or async/await for responses',
-  '// console.log(), debugger, and browser DevTools\n// Use breakpoints and step-through debugging',
-  '// Minimize DOM manipulation and use event delegation\n// Debounce/throttle expensive operations'
-];
-
-function createDailyFiles() {
+function createDailyFile() {
   const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  const time = new Date().toTimeString().slice(0, 8).replace(/:/g, '');
+  const filename = `day${date}_${time}.js`;
   
-  for (let i = 0; i < 10; i++) {
-    const filename = `day${date}_${i}.js`;
-    fs.writeFileSync(filename, comments[i]);
-    
-    execSync(`git add ${filename}`);
-    execSync(`git commit -m "Add daily learning: ${topics[i]} - Day ${date} file ${i + 1}"`);
-  }
+  const content = jsTopics.join('\n');
   
+  fs.writeFileSync(filename, content);
+  execSync(`git add ${filename}`);
+  execSync(`git commit -m "Add daily JS learning: 10 JavaScript concepts - ${date}"`);
   execSync('git push');
-  console.log('Daily files created and pushed successfully!');
+  
+  console.log(`Created ${filename} with 10 JS topics!`);
 }
 
-createDailyFiles();
+createDailyFile();
