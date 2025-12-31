@@ -1,32 +1,78 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
+const path = require('path');
+
+// Change to the correct directory
+const repoPath = 'c:\\Users\\User\\Desktop\\Daily_improvement_code_JS';
+process.chdir(repoPath);
 
 const jsTopics = [
-  '// 1. Hoisting: var declarations are moved to top of scope',
-  '// 2. Event Loop: Handles async operations in JavaScript',
-  '// 3. Closures: Inner functions access outer function variables',
-  '// 4. Prototypes: Objects inherit properties from prototype chain',
-  '// 5. Promises: Handle asynchronous operations with .then()',
-  '// 6. Arrow Functions: Shorter syntax, lexical this binding',
-  '// 7. Destructuring: Extract values from arrays/objects easily',
-  '// 8. Template Literals: Use backticks for string interpolation',
-  '// 9. Spread Operator: ...array expands elements',
-  '// 10. Async/Await: Cleaner syntax for promise-based code'
+  '// Hoisting: var declarations are moved to top of scope',
+  '// Event Loop: Handles async operations in JavaScript',
+  '// Closures: Inner functions access outer function variables',
+  '// Prototypes: Objects inherit properties from prototype chain',
+  '// Promises: Handle asynchronous operations with .then()',
+  '// Arrow Functions: Shorter syntax, lexical this binding',
+  '// Destructuring: Extract values from arrays/objects easily',
+  '// Template Literals: Use backticks for string interpolation',
+  '// Spread Operator: ...array expands elements',
+  '// Async/Await: Cleaner syntax for promise-based code'
 ];
 
-function createDailyFile() {
+const topicNames = [
+  'JavaScript Hoisting',
+  'Event Loop Concepts',
+  'Closures and Scope',
+  'Prototype Chain',
+  'Promise Handling',
+  'Arrow Functions',
+  'Destructuring Assignment',
+  'Template Literals',
+  'Spread Operator',
+  'Async/Await Pattern'
+];
+
+function createDailyFiles() {
   const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  const time = new Date().toTimeString().slice(0, 8).replace(/:/g, '');
-  const filename = `day${date}_${time}.js`;
+  const baseTime = new Date();
   
-  const content = jsTopics.join('\n');
+  console.log(`\n🚀 Starting daily JS learning automation...`);
+  console.log(`📅 Date: ${date}`);
+  console.log(`📁 Repository: ${repoPath}\n`);
   
-  fs.writeFileSync(filename, content);
-  execSync(`git add ${filename}`);
-  execSync(`git commit -m "Add daily JS learning: 10 JavaScript concepts - ${date}"`);
-  execSync('git push');
+  for (let i = 0; i < 10; i++) {
+    const time = new Date(baseTime.getTime() + i * 1000).toTimeString().slice(0, 8).replace(/:/g, '');
+    const filename = `day${date}_${i + 1}_${time}.js`;
+    
+    // Create file with topic
+    fs.writeFileSync(filename, jsTopics[i]);
+    
+    // Git operations
+    execSync(`git add ${filename}`);
+    const commitMsg = `Add ${topicNames[i]} - Daily JS Learning Day ${date} Topic ${i + 1}`;
+    execSync(`git commit -m "${commitMsg}"`);
+    
+    console.log(`✅ Commit ${i + 1}/10: ${filename}`);
+    console.log(`   📝 Topic: ${topicNames[i]}`);
+    console.log(`   💬 Message: ${commitMsg}`);
+    
+    // Push each commit
+    execSync('git push');
+    console.log(`   🚀 Pushed to remote\n`);
+    
+    // Small delay to ensure unique timestamps
+    if (i < 9) {
+      // Use a simple loop for delay instead of timeout command
+      const start = Date.now();
+      while (Date.now() - start < 1000) {
+        // Wait 1 second
+      }
+    }
+  }
   
-  console.log(`Created ${filename} with 10 JS topics!`);
+  console.log(`🎉 Successfully created and pushed 10 commits!`);
+  console.log(`📊 Total files created: 10`);
+  console.log(`📤 Total commits pushed: 10`);
 }
 
-createDailyFile();
+createDailyFiles();
