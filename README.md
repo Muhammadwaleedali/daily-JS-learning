@@ -19,11 +19,15 @@ git clone https://github.com/qasimmirza96/Daily_improvement_code_JS.git
 cd Daily_improvement_code_JS
 ```
 
-### 2. Update the repository path
-Edit `daily-automation.js` line 6 with your local path:
-```javascript
-const repoPath = 'YOUR_PATH_HERE';
+### 2. Run the setup script
+```bash
+node setup-dev.js
 ```
+
+The interactive setup will ask for:
+- Your GitHub repository URL
+- Local repository path
+- Git username and email
 
 ### 3. Run the automation
 ```bash

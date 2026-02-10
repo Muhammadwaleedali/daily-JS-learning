@@ -5,7 +5,34 @@
 - Git installed and configured
 - A GitHub repository for storing daily commits
 
-## Setup Steps
+## Quick Setup (Recommended)
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/qasimmirza96/Daily_improvement_code_JS.git
+cd Daily_improvement_code_JS
+```
+
+### 2. Run the Setup Script
+```bash
+node setup-dev.js
+```
+
+The script will ask you:
+- Your GitHub repository URL
+- Local path for the repository
+- Your Git username and email
+
+That's it! The script will configure everything automatically.
+
+### 3. Run the Automation
+```bash
+node daily-automation.js
+```
+
+---
+
+## Manual Setup (Alternative)
 
 ### 1. Clone or Fork the Repository
 ```bash
